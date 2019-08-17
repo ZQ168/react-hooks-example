@@ -1,40 +1,36 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useState, useMemo, useCallback } from 'react';
 
-function PageFive({ count, dispatch }) {
-  function dispatchTestPersist() {
-    dispatch({
-      type: 'TEST_PERSIST_STATE',
-      data: count + 100,
-    });
+// 强行更新组件
+const useForceUpdate = () => {
+  const forceUpdate = useState(0)[1];
+  return () => forceUpdate(x => x + 1);
+};
+// 一个很耗时间的代码
+function slowlyAdd(n) {
+  console.time('add slowly');
+  let res = n;
+  for (let i = 0; i < 2000000000; i += 1) {
+    res += 1;
   }
-
-  return (
-    <div>
-      <h3>这是第5页</h3>
-      <hr />
-      <span>count：{count}</span>
-      <br />
-      <button type="button" onClick={dispatchTestPersist}>
-        点我+
-      </button>
-    </div>
-  );
+  console.timeEnd('add slowly');
+  return res;
 }
 
-PageFive.propTypes = {
-  count: PropTypes.number,
-  dispatch: PropTypes.func,
-};
+// useMemo记忆结果的一个自定义hook
+function useSlowlyAdd(n) {
+  const res = useMemo(() => slowlyAdd(n), [n]);
+  return res;
+}
 
-PageFive.defaultProps = {
-  count: 100,
-  dispatch: () => {},
-};
-
-export default connect(
-  ({ testPersist: { count } }) => ({
-    count,
-  }), // 从redux状态树用什么取什么
-)(PageFive);
+export default () => {
+  const [count, add] = useState(1);
+  const forceUpdate = useForceUpdate();
+  const handleClick = useCallback(() => {}, []);
+  useSlowlyAdd(count); // 第一次这里会耗很多时间，页面卡死一阵
+  return (
+    <>
+      <button onClick={forceUpdate}>更新页面</button>
+      <button onClick={() => add(count + 1)}>+</button>
+    </>
+  )
+}

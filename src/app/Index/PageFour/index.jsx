@@ -1,35 +1,32 @@
-import React, { useState, useMemo } from 'react';
-import Child from './components/Child';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  memo,
+  useMemo,
+} from 'react';
 
-export default function PageFour() {
-  const [obj, setObject] = useState({
-    count: 0,
-    name: 'hooks',
-  });
+function App() {
+  const [count, forceUpdate] = useState(0);
 
-  const handleChange = useMemo(() => {
-    console.log('传递给子组件的方法');
-  }, []);
+  const schema = { b: 1 };
 
   return (
     <div>
-      <h3>这是第4页</h3>
-      <hr />
-      Count: {obj.count}
-      <br />
-      <button
-        type="button"
-        onClick={() => setObject({ ...obj, count: obj.count + 1 })}
-      >
-        点我+
-      </button>
-      <button
-        type="button"
-        onClick={() => setObject({ ...obj, count: obj.count - 1 })}
-      >
-        点我-
-      </button>
-      <Child handleChange={handleChange} />
+      <Child schema={schema} />
+      <div onClick={() => forceUpdate(count + 1)}>Count {count}</div>
     </div>
   );
 }
+
+const Child = memo(props => {
+  useEffect(() => {
+    console.log('schema', props.schema);
+  }, [props.schema]);
+  return <div>Child</div>;
+},);
+
+export default App;

@@ -13,6 +13,8 @@ const PageFour = lazy(() => import('./PageFour')); // 第四页
 const PageFive = lazy(() => import('./PageFive')); // 第五页
 const PageSix = lazy(() => import('./PageSix')); // 第六页
 const PageSeven = lazy(() => import('./PageSeven')); // 第七页
+const Reducer = lazy(() => import('./Reducer')); // useReducer
+const Demo = lazy(() => import('./Demo')); // useReducer
 
 export default function Index({ history }) {
   return (
@@ -28,6 +30,8 @@ export default function Index({ history }) {
           <Route path="/pagefive" component={PageFive} />
           <Route path="/pagesix" component={PageSix} />
           <Route path="/pageseven" component={PageSeven} />
+          <Route path="/reducer" component={Reducer} />
+          <Route path="/demo" component={Demo} />
           <Route component={NoMatch} />
         </Switch>
       </div>
