@@ -7,7 +7,10 @@ import React, {
   useRef,
   memo,
   useMemo,
+  useReducer,
+  useImperativeHandle,
 } from 'react';
+import PropTypes from 'prop-types';
 // const ThemeContext = React.createContext('light');
 // const App = () => {
 
@@ -42,21 +45,61 @@ import React, {
 // };
 // export default App;
 
+const ThemeContext = React.createContext('light');
+const App = () => {
+  const [state, dispatch] = useReducer(reducer, { theme: 'light' });
+  function reducer(reducerState, action) {
+    switch (action.type) {
+      case 'change':
+        return { theme: reducerState.theme === 'light' ? 'dark' : 'light' };
+      default:
+        return reducerState;
+    }
+  }
+  return (
+    <div>
+      <h3>useContext的使用方式{state.theme}</h3>
+      <ThemeContext.Provider value={state.theme}>
+        <AppBody dispatch={dispatch} />
+      </ThemeContext.Provider>
+    </div>
+  );
+};
+
+const AppBody = memo(({ dispatch }) => {
+  console.log('AppBody rendered');
+  const prevCountRef = useRef();
+  useEffect(() => {
+    prevCountRef.current = dispatch;
+  });
+  const prevClick = prevCountRef.current;
+  console.log('AppMiddle rendered', Object.is(prevClick, dispatch));
+  const theme = useContext(ThemeContext);
+  return (
+    <button type="button" onClick={() => dispatch({ type: 'change' })}>
+      {theme}
+    </button>
+  );
+});
+export default App;
+
 // const ThemeContext = React.createContext('light');
 // const App = () => {
 //   const [theme, setTheme] = useState('light');
 //   const [count, setCount] = useState(1);
 //   const toggleTheme = useCallback(() => {
-//     setTheme(prevtheme => (prevtheme === 'light' ? 'dark' : 'light'));
-//   }, []);
-//   // const arrObj=[{name:0,key:1}]
+//     setTheme(theme === 'light' ? 'dark' : 'light');
+//   }, [theme]);
+
 //   return (
 //     <div>
 //       <button onClick={() => setCount(count + 1)} type="button">
 //         {count}
 //       </button>
 //       <h3>useContext的使用方式{theme}</h3>
-//       <AppBody onClick={toggleTheme} />
+//       <ThemeContext.Provider value={theme}>
+//         <AppBody onClick={toggleTheme} />
+//       </ThemeContext.Provider>
 //     </div>
 //   );
 // };
@@ -68,11 +111,11 @@ import React, {
 //     prevCountRef.current = onClick;
 //   });
 //   const prevClick = prevCountRef.current;
-//   console.log('AppMiddle rendered', prevClick === onClick);
+//   console.log('AppMiddle rendered', Object.is(prevClick, onClick));
 //   const theme = useContext(ThemeContext);
 //   return (
 //     <button onClick={onClick} type="button">
-//       ddd
+//       {theme}
 //     </button>
 //   );
 // });
@@ -127,25 +170,3 @@ import React, {
 //   }
 // }
 // export default App;
-
-// const Button = memo(({ handleClick }) => {
-//   const refCount = useRef(0);
-//   console.log('chidRender');
-//   return (
-//     <button onClick={handleClick} type="button">
-//       {refCount.current += 1}
-//     </button>
-//   );
-// });
-// function App() {
-//   const [isOn, setIsOn] = useState(false);
-//   const handleClick = useCallback(() => setIsOn(prevIsOn => !prevIsOn), []);
-//   return (
-//     <div>
-//       <h1>{isOn ? 'on' : 'off'}</h1>
-//       <Button handleClick={handleClick} />
-//     </div>
-//   );
-// }
-// export default App;
-

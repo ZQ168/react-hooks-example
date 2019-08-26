@@ -1,42 +1,49 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 
-// export default function Example() {
-//   const [state, dispatch] = useReducer(reducer, initialArg, int);
-
-//   return (
-//     <div style={{ position: 'relative' }}>
-//       <h3>useReducer</h3>
-
-//     </div>
-//   );
-// }
-
-// 第一步：创建需要共享的context
-const ThemeContext = React.createContext('light');
-class App extends React.Component {
-  render() {
-    // 第二步：使用 Provider 提供 ThemeContext 的值，Provider所包含的子树都可以直接访问ThemeContext的值
-    return (
-      <ThemeContext.Provider value="dark">
-        <Toolbar />
-      </ThemeContext.Provider>
-    );
+const initialState = {
+  count: 0,
+};
+// eslint-disable-next-line consistent-return
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'ADD': {
+      return {
+        count: state.count + 1,
+      };
+    }
+    case 'MINUS': {
+      return {
+        count: state.count - 1,
+      };
+    }
+    default:
+      break;
   }
-}
-// Toolbar 组件并不需要透传 ThemeContext
-function Toolbar(props) {
+};
+
+function Counter1() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
-    <div>
-      <ThemedButton />
-    </div>
+    <>
+      <div>count: {state.count}</div>
+      <button
+        type="button"
+        onClick={() => {
+          dispatch({ type: 'ADD' });
+        }}
+      >
+        +
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          dispatch({ type: 'MINUS' });
+        }}
+      >
+        -
+      </button>
+    </>
   );
 }
-
-function ThemedButton(props) {
-  // 第三步：使用共享 Context
-  const theme = useContext('ThemeContext');
-  render() {
-    return <Button theme={theme} />;
-  }
-}
-export default App;
+export default Counter1;

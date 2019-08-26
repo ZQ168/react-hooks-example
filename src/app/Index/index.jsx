@@ -6,13 +6,13 @@ import './style.scss';
 
 const Home = lazy(() => import('./Home')); // 登录后主页
 const NoMatch = lazy(() => import('./NoMatch')); // 404没有匹配页面
-const PageOne = lazy(() => import('./PageOne')); // 第一页
+const PageOne = lazy(() => import('./State')); // useState
 const PageTwo = lazy(() => import('./PageTwo')); // 第二页
-const PageThree = lazy(() => import('./PageThree')); // 第三页
-const PageFour = lazy(() => import('./PageFour')); // 第四页
-const PageFive = lazy(() => import('./PageFive')); // 第五页
-const PageSix = lazy(() => import('./PageSix')); // 第六页
-const PageSeven = lazy(() => import('./PageSeven')); // 第七页
+const PageThree = lazy(() => import('./Effect')); // 第三页
+const PageFour = lazy(() => import('./Memo')); // 第四页
+const PageFive = lazy(() => import('./Callback')); // 第五页
+const PageSix = lazy(() => import('./Context')); // 第六页
+const PageSeven = lazy(() => import('./LayoutEffect')); // 第七页
 const Reducer = lazy(() => import('./Reducer')); // useReducer
 const Demo = lazy(() => import('./Demo')); // useReducer
 

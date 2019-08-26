@@ -32,42 +32,47 @@ export default class Aside extends Component {
           <li>侧边导航栏</li>
           <li>
             <NavLink exact to="/pageone" activeClassName="activeLink">
-              第一页
+              useState
             </NavLink>
           </li>
           <li>
             <NavLink exact to="/pagetwo" activeClassName="activeLink">
-              第二页
+              自定义useState
             </NavLink>
           </li>
           <li>
             <NavLink exact to="/pagethree" activeClassName="activeLink">
-              第三页
+              useEffect
             </NavLink>
           </li>
           <li>
             <NavLink exact to="/pagefour" activeClassName="activeLink">
-              第四页
+              useMemo
             </NavLink>
           </li>
           <li>
             <NavLink exact to="/pagefive" activeClassName="activeLink">
-              第五页
+              useCallback
             </NavLink>
           </li>
           <li>
             <NavLink exact to="/pagesix" activeClassName="activeLink">
-              第六页
+              useContext
             </NavLink>
           </li>
           <li>
             <NavLink exact to="/pageseven" activeClassName="activeLink">
-              第七页
+              useLayoutEffect
             </NavLink>
           </li>
           <li>
             <NavLink exact to="/reducer" activeClassName="activeLink">
               useReducer
+            </NavLink>
+          </li>
+          <li>
+            <NavLink exact to="/demo" activeClassName="activeLink">
+              Demo
             </NavLink>
           </li>
         </ul>

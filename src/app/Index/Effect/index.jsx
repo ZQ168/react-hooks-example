@@ -4,9 +4,9 @@ import useFetch from './useFetch';
 
 const Hello = () => {
   useEffect(() => {
-    console.log('render');
+    console.log('childrenrender');
     return () => {
-      console.log('unmount');
+      console.log('childrenunmount');
     };
   }, []);
   return <div>hello</div>;

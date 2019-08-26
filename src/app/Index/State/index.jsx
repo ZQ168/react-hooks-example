@@ -7,6 +7,10 @@ export default function Example() {
     width: 100,
     height: 100,
   });
+  // const [left,setLeft] = useState(0);
+  // const [top,setTop] = useState(0);
+  // const [width,setWidth] = useState(100);
+  // const [height,setHeight] = useState(100);
   useEffect(() => {
     function handleWindowMouseMove(e) {
       updateState(stateParam => ({

@@ -1,38 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-export default function Example() {
-  const [state, updateState] = useState({
-    left: 0,
-    top: 0,
-    width: 100,
-    height: 100,
-  });
-  useEffect(() => {
-    function handleWindowMouseMove(e) {
-      updateState(stateParam => ({
-        ...stateParam,
-        left: e.pageX,
-        top: e.pageY,
-      }));
-    }
-    window.addEventListener('mousemove', handleWindowMouseMove);
-    return () => window.removeEventListener('mousemove', handleWindowMouseMove);
-  }, []);
-  return (
-    <div style={{ position: 'relative' }}>
-      <header>useState</header>
-      <div
-        style={{
-          position: 'absolute',
-          left: state.left,
-          top: state.top,
-          width: state.width,
-          height: state.width,
-          background: 'red',
-        }}
-      >
-        kkkkk
-      </div>
-    </div>
-  );
-}
+import { DynamicBarChart } from './DynamicBarChart';
+
+import helpers from './helper';
+import mocks from './mock';
+
+const App = () => (
+  <DynamicBarChart
+    barGapSize={10}
+    data={helpers.generateData(10, mocks.defaultChart, {
+      prefix: 'Iteration',
+    })}
+    iterationTimeout={100}
+    showTitle
+    startRunningTimeout={2500}
+  />
+);
+
+export default App;
